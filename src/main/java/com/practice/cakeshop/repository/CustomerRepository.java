@@ -1,5 +1,8 @@
 package com.practice.cakeshop.repository;
 
-public interface CustomerRepository {
+import com.practice.cakeshop.entity.Customer;
 
+public interface CustomerRepository {
+	
+	public Customer register(Customer customer);
 }
