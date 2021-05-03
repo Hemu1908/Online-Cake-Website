@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practice.cakeshop.dto.LoginDto;
+import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.service.CustomerService;
 
@@ -19,4 +21,8 @@ public class CustomerController {
 		return custService.register(customer);
 	}
 
+	@PostMapping(value = "/login")
+	   public LoginStatus loginCustomer(@RequestBody LoginDto loginData) {
+		 return custService.login(loginData.getEmail(), loginData.getPassword());
+	 }
 }
