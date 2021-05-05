@@ -2,6 +2,7 @@ package com.practice.cakeshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class CustomerController {
 	 }
 	
 	@PostMapping(value = "/addProduct")
-	public Product addProduct(@RequestBody ProductDto product) {
+	public Product addProduct(@ModelAttribute ProductDto product) {
 		try {
 			return custService.addProduct(product);
 		}catch(Exception e) {
@@ -49,6 +50,8 @@ public class CustomerController {
 			return null;
 		}
 	}
+	
+
 }
 
 

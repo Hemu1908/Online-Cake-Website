@@ -1,11 +1,15 @@
 package com.practice.cakeshop.repository;
 
+import java.io.FileOutputStream;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
@@ -62,13 +66,23 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 
 	@Override
-	public Product addProduct(ProductDto productDto) {
+	public Product addProduct(@ModelAttribute ProductDto productDto) {
 		Product product = new Product();
+//		String imageUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
+        String imageUploadLocation = "c:/uploads/";
+        String fileName = productDto.getImage().getOriginalFilename();
+       String targetFile = imageUploadLocation + fileName;
+       try {
+           FileCopyUtils.copy(productDto.getImage().getInputStream(), new FileOutputStream(targetFile));
+       }
+       catch (Exception e) {
+           e.printStackTrace();
+       }
 		product.setName(productDto.getName());
 		product.setDescription(productDto.getDescription());
-		product.setUnitPrice(productDto.getUnitPrice());
-		product.setImage(productDto.getImage());
-		product.setCategory(findCategoryByName(productDto.getCategory().getName()));
+		product.setUnitPrice(Double.parseDouble(productDto.getUnitPrice()));
+		product.setImage(fileName);
+		product.setCategory(findCategoryByName(productDto.getCategoryName()));
 		return em.merge(product);
 	}
 
@@ -96,5 +110,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 				.setParameter("name", name)
 				.getSingleResult();
 	}
+
+
+	@Override
+	public Product findProductByProductId(int productId) {
+		return (Product) em.createQuery("select p from Product p where p.productId= :id")
+				.setParameter("id", productId)
+				.getSingleResult();
+	}
+	
+	
 }
 
