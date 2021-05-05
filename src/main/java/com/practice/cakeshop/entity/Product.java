@@ -1,6 +1,5 @@
 package com.practice.cakeshop.entity;
 
-import javax.mail.Multipart;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 @Table(name = "shop_product")
 public class Product {
 	
 	@Id
-	@SequenceGenerator(name="customer_seq", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="product_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="product_seq")
 	@Column(name = "product_id")
 	int productId;
@@ -25,7 +27,7 @@ public class Product {
 	String name;
 	String description;
 	double unitPrice;
-	Multipart image;
+	String image;
 	
 	@ManyToOne 
 	@JoinColumn(name = "category_id")
@@ -63,14 +65,14 @@ public class Product {
 		this.unitPrice = unitPrice;
 	}
 
-	public Multipart getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Multipart image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
-
+	@JsonIgnore
 	public Category getCategory() {
 		return category;
 	}

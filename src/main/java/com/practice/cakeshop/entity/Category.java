@@ -12,12 +12,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "shop_category")
 public class Category {
 	
 	@Id
-	@SequenceGenerator(name="customer_seq", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="category_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="category_seq")
 	@Column(name = "category_id")
 	int categoryId;
@@ -42,6 +44,7 @@ public class Category {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public List<Product> getProducts() {
 		return products;
 	}

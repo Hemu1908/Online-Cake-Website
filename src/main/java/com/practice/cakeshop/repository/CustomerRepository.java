@@ -16,4 +16,5 @@ public interface CustomerRepository {
 	public boolean isCategoryPresent(String name);
 	public Category addCategory(CategoryDto categoryDto);
 	public Category findCategoryByName(String name);
+	public Product findProductByProductId(int productId);
 }

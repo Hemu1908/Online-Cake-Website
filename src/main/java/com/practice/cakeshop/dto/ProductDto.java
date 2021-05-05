@@ -1,18 +1,20 @@
 package com.practice.cakeshop.dto;
 
-import javax.mail.Multipart;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.practice.cakeshop.entity.Category;
 
 public class ProductDto {
 	
 	int productId;
 	String name;
 	String description;
-	double unitPrice;
-	Multipart image;
-	Category category;
+	String unitPrice;
+	MultipartFile image;
+	String categoryName;
 	
+	public ProductDto() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getProductId() {
 		return productId;
 	}
@@ -31,24 +33,26 @@ public class ProductDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public double getUnitPrice() {
+	
+	public String getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(double unitPrice) {
+	public void setUnitPrice(String unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-	public Multipart getImage() {
+	public MultipartFile getImage() {
 		return image;
 	}
-	public void setImage(Multipart image) {
+	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
-	public Category getCategory() {
-		return category;
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
+	
 	
 	
 	

@@ -1,7 +1,10 @@
 package com.practice.cakeshop.service;
 
+import javax.mail.Multipart;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
@@ -16,13 +19,6 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	CustomerRepository custRepo;
-	
-	@Autowired
-	Product product;
-	
-	@Autowired
-	ProductDto productDto;
-
 
 	@Override
 	public Customer register(Customer customer) {
@@ -46,6 +42,13 @@ public class CustomerServiceImpl implements CustomerService{
 	public Category addCategory(CategoryDto category) {
 		return custRepo.addCategory(category);
 	}
+
+//	@Override
+//	public void addImage(int productId, Multipart imgName) {
+//		Product product = custRepo.findProductByProductId(productId);
+//		product.setImage((MultipartFile) imgName);
+//		
+//	}
 	
 
 
