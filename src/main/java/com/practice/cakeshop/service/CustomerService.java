@@ -1,5 +1,7 @@
 package com.practice.cakeshop.service;
 
+import java.util.List;
+
 import javax.mail.Multipart;
 
 import com.practice.cakeshop.dto.CategoryDto;
@@ -16,5 +18,6 @@ public interface CustomerService {
 	public Product addProduct(ProductDto product);
 	public Category addCategory(CategoryDto category);
 	//public void addImage(int productId, Multipart imgName);
+	public List<String> fetchCategoryNames();
 
 }

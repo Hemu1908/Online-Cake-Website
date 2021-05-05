@@ -1,5 +1,7 @@
 package com.practice.cakeshop.repository;
 
+import java.util.List;
+
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.ProductDto;
@@ -17,4 +19,5 @@ public interface CustomerRepository {
 	public Category addCategory(CategoryDto categoryDto);
 	public Category findCategoryByName(String name);
 	public Product findProductByProductId(int productId);
+	public List<String> fetchCategoryNames();
 }

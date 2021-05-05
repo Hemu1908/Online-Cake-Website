@@ -1,5 +1,7 @@
 package com.practice.cakeshop.service;
 
+import java.util.List;
+
 import javax.mail.Multipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,12 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Category addCategory(CategoryDto category) {
 		return custRepo.addCategory(category);
+	}
+
+	@Override
+	public List<String> fetchCategoryNames() {
+		// TODO Auto-generated method stub
+		return custRepo.fetchCategoryNames();
 	}
 
 //	@Override

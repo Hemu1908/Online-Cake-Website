@@ -1,6 +1,7 @@
 package com.practice.cakeshop.repository;
 
 import java.io.FileOutputStream;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -118,6 +119,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 				.setParameter("id", productId)
 				.getSingleResult();
 	}
+
+
+	@Override
+	public List<String> fetchCategoryNames() {
+		// TODO Auto-generated method stub
+		String jpql = "select c.name from Category c";
+		return (List<String>)em.createQuery(jpql).getResultList();
+	}
+	
 	
 	
 }
