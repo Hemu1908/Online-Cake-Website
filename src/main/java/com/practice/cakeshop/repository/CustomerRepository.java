@@ -20,4 +20,5 @@ public interface CustomerRepository {
 	public Category findCategoryByName(String name);
 	public Product findProductByProductId(int productId);
 	public List<String> fetchCategoryNames();
+	public List<Category> fetchProductsByCategoryName(String categoryName);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -126,6 +127,16 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 		// TODO Auto-generated method stub
 		String jpql = "select c.name from Category c";
 		return (List<String>)em.createQuery(jpql).getResultList();
+	}
+
+
+	@Override
+	public List<Category> fetchProductsByCategoryName(String categoryName) {
+		String jpql = "select c.products from Category c where c.name=:cname";
+		
+		Query query = em.createQuery(jpql);
+		query.setParameter("cname", categoryName);
+		return query.getResultList();
 	}
 	
 	

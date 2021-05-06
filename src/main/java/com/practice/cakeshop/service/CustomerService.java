@@ -19,5 +19,6 @@ public interface CustomerService {
 	public Category addCategory(CategoryDto category);
 	//public void addImage(int productId, Multipart imgName);
 	public List<String> fetchCategoryNames();
+	public List<Category> fetchProductsByCategoryName(String categoryName);
 
 }

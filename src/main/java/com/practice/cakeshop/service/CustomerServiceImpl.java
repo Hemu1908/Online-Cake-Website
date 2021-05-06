@@ -51,6 +51,12 @@ public class CustomerServiceImpl implements CustomerService{
 		return custRepo.fetchCategoryNames();
 	}
 
+	@Override
+	public List<Category> fetchProductsByCategoryName(String categoryName) {
+		// TODO Auto-generated method stub
+		return custRepo.fetchProductsByCategoryName(categoryName);
+	}
+
 //	@Override
 //	public void addImage(int productId, Multipart imgName) {
 //		Product product = custRepo.findProductByProductId(productId);
