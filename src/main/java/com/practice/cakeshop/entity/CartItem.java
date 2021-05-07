@@ -41,7 +41,7 @@ public class CartItem {
 		this.cartItemId = cartItemId;
 	}
 	
-	@JsonIgnore
+	
 	public Cart getCart() {
 		return cart;
 	}

@@ -142,6 +142,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 
 	@Override
+	@Transactional
 	public CartItem addToCart(CartItemDto cartDto) {
 		
 		Cart cart = new Cart();
