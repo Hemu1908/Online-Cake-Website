@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.ProductDto;
+import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Product;
@@ -55,6 +57,11 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<Category> fetchProductsByCategoryName(String categoryName) {
 		// TODO Auto-generated method stub
 		return custRepo.fetchProductsByCategoryName(categoryName);
+	}
+
+	@Override
+	public CartItem addToCart(CartItemDto cartDto) {
+		return custRepo.addToCart(cartDto);
 	}
 
 //	@Override

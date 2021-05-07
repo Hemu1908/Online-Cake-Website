@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.ProductDto;
+import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Product;
@@ -51,6 +53,15 @@ public class CustomerController {
 	public Category addCategory(@RequestBody CategoryDto category) {
 		try {
 			return custService.addCategory(category);
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	@PostMapping(value = "/addToCart")
+	public CartItem addToCart(@RequestBody CartItemDto cartDto) {
+		try {
+			return custService.addToCart(cartDto);
 		}catch(Exception e) {
 			return null;
 		}

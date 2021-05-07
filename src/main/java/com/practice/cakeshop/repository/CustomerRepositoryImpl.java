@@ -13,16 +13,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.ProductDto;
+import com.practice.cakeshop.entity.Cart;
+import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Product;
 
 @Repository
 @Transactional
-public class CustomerRepositoryImpl implements CustomerRepository {
+public class CustomerRepositoryImpl implements CustomerRepository{
 	
 	@PersistenceContext
 	EntityManager em;
@@ -116,9 +119,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 	@Override
 	public Product findProductByProductId(int productId) {
-		return (Product) em.createQuery("select p from Product p where p.productId= :id")
-				.setParameter("id", productId)
-				.getSingleResult();
+		return em.find(Product.class, productId);
 	}
 
 
@@ -138,6 +139,34 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 		query.setParameter("cname", categoryName);
 		return query.getResultList();
 	}
+
+
+	@Override
+	public CartItem addToCart(CartItemDto cartDto) {
+		
+		Cart cart = new Cart();
+		cart.setCustomer(findCustomerById(cartDto.getCustomerId()));
+		cart.setCartId(cartDto.getCartId());
+		cart = em.merge(cart);
+		CartItem cartItem = new CartItem();
+		cartItem.setCartItemId(cartDto.getCartItemId());
+		cartItem.setCart(cart);
+		cartItem.setProduct(findProductByProductId(cartDto.getProductId()));
+		cartItem.setQuantity(cartDto.getQuantity());
+//		Cart cart = new Cart();
+//		cart.setCartId(cartItem.getCart().getCartId());
+//		cart.setCustomer(cartDto.getCustomerId());
+		
+		return em.merge(cartItem);
+	}
+
+
+	@Override
+	public Customer findCustomerById(int customerId) {
+		return em.find(Customer.class, customerId);
+	}
+
+
 	
 	
 	
