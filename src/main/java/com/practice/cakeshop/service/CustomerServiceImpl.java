@@ -64,12 +64,12 @@ public class CustomerServiceImpl implements CustomerService{
 		return custRepo.addToCart(cartDto);
 	}
 
-//	@Override
-//	public void addImage(int productId, Multipart imgName) {
-//		Product product = custRepo.findProductByProductId(productId);
-//		product.setImage((MultipartFile) imgName);
-//		
-//	}
+	@Override
+	public List<CartItem> displayItemsOfCart(int customerId) {
+		// TODO Auto-generated method stub
+		return custRepo.displayAllItemsOfCart(customerId);
+	}
+
 	
 
 

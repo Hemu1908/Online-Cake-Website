@@ -76,6 +76,13 @@ public class CustomerController {
 	public List<Category> fetchProductsByCategoryName(@RequestParam String categoryName) {
 		return custService.fetchProductsByCategoryName(categoryName);
 	}
+	
+	@GetMapping(value = "/displayCartItems")
+	public List<CartItem> displayCartItems(@RequestParam int customerId) {
+		return custService.displayItemsOfCart(customerId);
+	}
+	
+	
 
 }
 

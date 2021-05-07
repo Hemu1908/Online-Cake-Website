@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "shop_cart")
 public class Cart {
@@ -47,6 +49,7 @@ public class Cart {
 		this.customer = customer;
 	}
 
+	@JsonIgnore
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}

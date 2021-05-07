@@ -19,9 +19,9 @@ public interface CustomerService {
 	public LoginStatus login(String emailId, String password);
 	public Product addProduct(ProductDto product);
 	public Category addCategory(CategoryDto category);
-	//public void addImage(int productId, Multipart imgName);
 	public List<String> fetchCategoryNames();
 	public List<Category> fetchProductsByCategoryName(String categoryName);
 	public CartItem addToCart(CartItemDto cartDto);
+	public List<CartItem> displayItemsOfCart(int customerId);
 
 }
