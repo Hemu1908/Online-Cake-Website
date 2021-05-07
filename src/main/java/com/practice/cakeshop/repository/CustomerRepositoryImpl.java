@@ -167,6 +167,15 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 	}
 
 
+	@Override
+	public List<CartItem> displayAllItemsOfCart(int customerId) {
+		String jpql = "select c from CartItem c where c.cart.customer.customerId = :custId";
+		Query q = em.createQuery(jpql);
+		q.setParameter("custId", customerId);
+		return q.getResultList();
+	}
+
+
 	
 	
 	
