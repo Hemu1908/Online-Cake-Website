@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,11 +18,23 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="customer_seq")
 	@Column(name = "customer_id")
 	int customerId;
+	
 	String name;
 	String email;
 	String password;
 	String address;
 	String mobile;
+	
+	@OneToMany
+	@JoinColumn(name = "orderId")
+	Order order;
+	
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 	public int getCustomerId() {
 		return customerId;
 	}

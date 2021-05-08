@@ -1,6 +1,7 @@
 package com.practice.cakeshop.repository;
 
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
+import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
 import com.practice.cakeshop.entity.Cart;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
+import com.practice.cakeshop.entity.Order;
 import com.practice.cakeshop.entity.Product;
 
 @Repository
@@ -173,6 +176,36 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 		String jpql = "select c from CartItem c where c.cart.customer.customerId = :custId";
 		Query q = em.createQuery(jpql);
 		q.setParameter("custId", customerId);
+		return q.getResultList();
+	}
+
+
+	@Override
+	public Order placeOrder(OrderDto orderDto) {
+		// TODO Auto-generated method stub
+		Order order = new Order();
+		order.setCartItem(findCartItemById(orderDto.getCartItemId()));
+		order.setShippingAddress(orderDto.getShippingAddress());
+		order.setOrderedDateTime(LocalDateTime.now());
+		order.setShippingDateTime(orderDto.getShippingDateTime());
+		order.setAmount(orderDto.getAmount());
+		order.setCustomer(findCustomerById(orderDto.getCustomerId()));
+		return em.merge(order);
+	}
+
+
+	@Override
+	public CartItem findCartItemById(int cartItemId) {
+		// TODO Auto-generated method stub
+		return em.find(CartItem.class, cartItemId);
+	}
+
+
+	@Override
+	public List<Order> viewOrders(int orderId) {
+		String jpql = "select o from Order o where o.orderId = :orderId";
+		Query q = em.createQuery(jpql);
+		q.setParameter("orderId", orderId);
 		return q.getResultList();
 	}
 

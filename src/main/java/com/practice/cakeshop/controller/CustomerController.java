@@ -16,10 +16,12 @@ import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginDto;
 import com.practice.cakeshop.dto.LoginStatus;
+import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
+import com.practice.cakeshop.entity.Order;
 import com.practice.cakeshop.entity.Product;
 import com.practice.cakeshop.service.CustomerService;
 
@@ -82,6 +84,19 @@ public class CustomerController {
 		return custService.displayItemsOfCart(customerId);
 	}
 	
+	@PostMapping(value = "/placeOrder")
+	public Order placeOrder(@RequestBody OrderDto orderDto) {
+		try {
+			return custService.placeOrder(orderDto);
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	@GetMapping(value = "/viewOrders")
+	public List<Order> viewOrders(@RequestParam int orderId) {
+		return custService.viewOrders(orderId);
+	}
 	
 
 }
