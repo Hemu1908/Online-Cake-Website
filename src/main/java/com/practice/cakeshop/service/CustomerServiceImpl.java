@@ -11,10 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
+import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
+import com.practice.cakeshop.entity.Order;
 import com.practice.cakeshop.entity.Product;
 import com.practice.cakeshop.repository.CustomerRepository;
 
@@ -68,6 +70,18 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<CartItem> displayItemsOfCart(int customerId) {
 		// TODO Auto-generated method stub
 		return custRepo.displayAllItemsOfCart(customerId);
+	}
+
+	@Override
+	public Order placeOrder(OrderDto orderDto) {
+		// TODO Auto-generated method stub
+		return custRepo.placeOrder(orderDto);
+	}
+
+	@Override
+	public List<Order> viewOrders(int orderId) {
+		// TODO Auto-generated method stub
+		return custRepo.viewOrders(orderId);
 	}
 
 	
