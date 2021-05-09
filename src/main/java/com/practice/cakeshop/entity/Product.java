@@ -1,12 +1,17 @@
 package com.practice.cakeshop.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,6 +38,12 @@ public class Product {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	List<CartItem> cartItem;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	List<OrderItem> orderItem;
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -80,9 +91,25 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	
-	
-	
 
+
+	@JsonIgnore
+	public List<CartItem> getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(List<CartItem> cartItem) {
+		this.cartItem = cartItem;
+	}
+
+	@JsonIgnore
+	public List<OrderItem> getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(List<OrderItem> orderItem) {
+		this.orderItem = orderItem;
+	}
+	
+	
 }

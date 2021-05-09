@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -25,6 +26,8 @@ import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Order;
+import com.practice.cakeshop.entity.OrderItem;
+import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
 
 @Repository
@@ -149,20 +152,49 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 	@Transactional
 	public CartItem addToCart(CartItemDto cartDto) {
 		
-		Cart cart = new Cart();
-		cart.setCustomer(findCustomerById(cartDto.getCustomerId()));
-		cart.setCartId(cartDto.getCartId());
-		cart = em.merge(cart);
-		CartItem cartItem = new CartItem();
-		cartItem.setCartItemId(cartDto.getCartItemId());
-		cartItem.setCart(cart);
-		cartItem.setProduct(findProductByProductId(cartDto.getProductId()));
-		cartItem.setQuantity(cartDto.getQuantity());
-//		Cart cart = new Cart();
-//		cart.setCartId(cartItem.getCart().getCartId());
-//		cart.setCustomer(cartDto.getCustomerId());
-		
-		return em.merge(cartItem);
+		//If product is already in the cart for a particular customer
+		String jpql = "select c from CartItem c where c.product.productId=:pId and c.cart.customer.customerId=:cId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("pId", cartDto.getProductId());
+		query.setParameter("cId", cartDto.getCustomerId());
+		try {
+			CartItem cartItem = (CartItem)query.getSingleResult();
+			System.out.println(cartItem.getQuantity());
+			cartItem.setQuantity(cartItem.getQuantity()+1);
+			return em.merge(cartItem);
+		} catch(NoResultException nre) {
+			
+			//If a cart is available in cart table for a customer
+			String jpql1 = "select c from Cart c where c.customer.customerId=:cId";
+			Query query1 = em.createQuery(jpql1);
+			query1.setParameter("cId", cartDto.getCustomerId());
+			
+			try {
+				CartItem cartItem = new CartItem();
+				Cart cart = (Cart)query1.getSingleResult();
+				System.out.println(cart.getCartId());
+				cartItem.setCart(cart);
+				cartItem.setProduct(findProductByProductId(cartDto.getProductId()));
+				cartItem.setQuantity(cartDto.getQuantity());
+				return em.merge(cartItem);
+				
+			} catch(NoResultException e) {
+				//Adding new product for new customer
+				try {
+					System.out.println("In first exception");
+					Cart cart = new Cart();
+					cart.setCustomer(findCustomerById(cartDto.getCustomerId()));
+					cart = em.merge(cart);
+					CartItem cartItem = new CartItem();
+					cartItem.setCart(cart);
+					cartItem.setProduct(findProductByProductId(cartDto.getProductId()));
+					cartItem.setQuantity(cartDto.getQuantity());
+					return em.merge(cartItem);
+				} catch(NoResultException ne) {
+					return null;
+				}
+			}
+		}
 	}
 
 
@@ -173,26 +205,45 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 
 	@Override
-	public List<CartItem> displayAllItemsOfCart(int customerId) {
-		String jpql = "select c from CartItem c where c.cart.customer.customerId = :custId";
+	public Cart displayAllItemsOfCart(int customerId) {
+		String jpql = "select c from Cart c where c.customer.customerId = :custId";
 		Query q = em.createQuery(jpql);
 		q.setParameter("custId", customerId);
-		return q.getResultList();
+		return (Cart) q.getSingleResult();
 	}
 
 
 	@Override
+	@Transactional
 	public Order placeOrder(OrderDto orderDto) {
 		// TODO Auto-generated method stub
 		Order order = new Order();
-		order.setCart(findCartById(orderDto.getCartId()));
-		order.setShippingAddress(orderDto.getShippingAddress());
-		order.setOrderedDateTime(LocalDate.now());
-//		System.out.println(orderDto.getShippingDateTime());
-		order.setShippingDateTime(orderDto.getShippingDateTime());
-		order.setAmount(orderDto.getAmount());
 		order.setCustomer(findCustomerById(orderDto.getCustomerId()));
-		return em.merge(order);
+		order.setAmount(orderDto.getAmount());
+		order.setOrderedDateTime(LocalDate.now());
+		order.setShippingDate(orderDto.getShippingDateTime());
+		order.setShippingAddress(orderDto.getShippingAddress());
+		order.setTimeslot(orderDto.getDeliveryTime());
+		order.setOrderStatus(OrderStatus.PENDING);
+		
+		order = em.merge(order);
+		
+//		System.out.println(findCartById(orderDto.getCartId()).getCartItems());
+		List<CartItem> cartItem = findCartById(orderDto.getCartId()).getCartItems();
+		for (CartItem element : cartItem) {
+			OrderItem item = new OrderItem();
+			item.setOrder(order);
+			item.setProduct(element.getProduct());
+			item.setPrice(element.getProduct().getUnitPrice());
+			item.setQuantity(element.getQuantity());
+			item = em.merge(item);
+			
+		}
+		int rec = deleteCartItem(orderDto.getCartId());
+		System.out.println(rec);
+		rec = deleteCart(orderDto.getCartId());
+		System.out.println(rec);
+		return order;
 	}
 
 
@@ -214,13 +265,32 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 	@Override
 	public Cart findCartById(int cartId) {
-		
 		return em.find(Cart.class, cartId);
 	}
 
 
-	
-	
+	@Override
+	public int deleteCart(int cartId) {
+		// TODO Auto-generated method stub
+		String jpql = "delete from Cart c where c.cartId=:cId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("cId", cartId);
+		int rec = query.executeUpdate();
+		
+//		em.detach(findCartById(cartId));
+		return rec;
+		
+	}
+
+
+	@Override
+	public int deleteCartItem(int cartId) {
+		String jpql = "delete from CartItem c where c.cart.cartId=:cId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("cId", cartId);
+		int rec = query.executeUpdate();
+		return rec;
+	}
 	
 }
 

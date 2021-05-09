@@ -1,11 +1,14 @@
 package com.practice.cakeshop.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,9 +31,9 @@ public class CartItem {
 	@JoinColumn(name = "cart_id")
 	Cart cart;
 	
-	@OneToOne 
+	@ManyToOne 
 	@JoinColumn(name = "product_id")
-	private Product product;
+	Product product;
 	
 	int quantity;
 	
@@ -43,7 +46,7 @@ public class CartItem {
 		this.cartItemId = cartItemId;
 	}
 	
-	
+	@JsonIgnore
 	public Cart getCart() {
 		return cart;
 	}
@@ -51,7 +54,7 @@ public class CartItem {
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-
+	
 	public Product getProduct() {
 		return product;
 	}

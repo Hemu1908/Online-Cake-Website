@@ -13,6 +13,7 @@ import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
+import com.practice.cakeshop.entity.Cart;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
@@ -67,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public List<CartItem> displayItemsOfCart(int customerId) {
+	public Cart displayItemsOfCart(int customerId) {
 		// TODO Auto-generated method stub
 		return custRepo.displayAllItemsOfCart(customerId);
 	}

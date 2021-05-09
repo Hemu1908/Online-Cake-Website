@@ -33,9 +33,6 @@ public class Cart {
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cart")
 	List<CartItem> cartItems;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
-	Order order;
-
 	public int getCartId() {
 		return cartId;
 	}

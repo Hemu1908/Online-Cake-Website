@@ -28,9 +28,11 @@ public interface CustomerRepository {
 	public List<String> fetchCategoryNames();
 	public List<Category> fetchProductsByCategoryName(String categoryName);
 	public CartItem addToCart(CartItemDto cartDto);
-	public List<CartItem> displayAllItemsOfCart(int customerId);
+	public Cart displayAllItemsOfCart(int customerId);
 	public Order placeOrder(OrderDto orderDto);
 	public CartItem findCartItemById(int cartItemId);
 	public List<Order> viewOrders(int orderId);
 	public Cart findCartById(int cartId);
+	public int deleteCart(int cartId);
+	public int deleteCartItem(int cartItemId);
 }

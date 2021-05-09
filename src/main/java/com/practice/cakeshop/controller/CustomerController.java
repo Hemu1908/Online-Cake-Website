@@ -18,6 +18,7 @@ import com.practice.cakeshop.dto.LoginDto;
 import com.practice.cakeshop.dto.LoginStatus;
 import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
+import com.practice.cakeshop.entity.Cart;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
@@ -80,7 +81,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping(value = "/displayCartItems")
-	public List<CartItem> displayCartItems(@RequestParam int customerId) {
+	public Cart displayCartItems(@RequestParam int customerId) {
 		return custService.displayItemsOfCart(customerId);
 	}
 	
