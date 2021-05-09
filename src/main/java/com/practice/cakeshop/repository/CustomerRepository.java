@@ -32,4 +32,5 @@ public interface CustomerRepository {
 	public Order placeOrder(OrderDto orderDto);
 	public CartItem findCartItemById(int cartItemId);
 	public List<Order> viewOrders(int orderId);
+	public Cart findCartById(int cartId);
 }

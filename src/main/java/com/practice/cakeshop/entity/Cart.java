@@ -31,7 +31,10 @@ public class Cart {
 	Customer customer;
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cart")
-	private List<CartItem> cartItems;
+	List<CartItem> cartItems;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
+	Order order;
 
 	public int getCartId() {
 		return cartId;
@@ -49,7 +52,7 @@ public class Cart {
 		this.customer = customer;
 	}
 
-	@JsonIgnore
+	
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}

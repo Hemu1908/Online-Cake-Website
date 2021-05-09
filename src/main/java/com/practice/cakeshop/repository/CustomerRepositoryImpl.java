@@ -1,6 +1,7 @@
 package com.practice.cakeshop.repository;
 
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -184,9 +185,10 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 	public Order placeOrder(OrderDto orderDto) {
 		// TODO Auto-generated method stub
 		Order order = new Order();
-		order.setCartItem(findCartItemById(orderDto.getCartItemId()));
+		order.setCart(findCartById(orderDto.getCartId()));
 		order.setShippingAddress(orderDto.getShippingAddress());
-		order.setOrderedDateTime(LocalDateTime.now());
+		order.setOrderedDateTime(LocalDate.now());
+//		System.out.println(orderDto.getShippingDateTime());
 		order.setShippingDateTime(orderDto.getShippingDateTime());
 		order.setAmount(orderDto.getAmount());
 		order.setCustomer(findCustomerById(orderDto.getCustomerId()));
@@ -207,6 +209,13 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 		Query q = em.createQuery(jpql);
 		q.setParameter("orderId", orderId);
 		return q.getResultList();
+	}
+
+
+	@Override
+	public Cart findCartById(int cartId) {
+		
+		return em.find(Cart.class, cartId);
 	}
 
 

@@ -1,5 +1,8 @@
 package com.practice.cakeshop.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "shop_customer")
@@ -25,14 +30,14 @@ public class Customer {
 	String address;
 	String mobile;
 	
-	@OneToMany
-	@JoinColumn(name = "orderId")
-	Order order;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	List<Order> order;
 	
-	public Order getOrder() {
+	@JsonIgnore
+	public List<Order> getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
+	public void setOrder(List<Order> order) {
 		this.order = order;
 	}
 	public int getCustomerId() {

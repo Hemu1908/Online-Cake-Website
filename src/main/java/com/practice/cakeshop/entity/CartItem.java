@@ -26,7 +26,7 @@ public class CartItem {
 	
 	@ManyToOne 
 	@JoinColumn(name = "cart_id")
-	private Cart cart;
+	Cart cart;
 	
 	@OneToOne 
 	@JoinColumn(name = "product_id")
@@ -34,9 +34,6 @@ public class CartItem {
 	
 	int quantity;
 	
-	@ManyToOne
-	@JoinColumn(name = "orderId")
-	Order order;
 
 	public int getCartItemId() {
 		return cartItemId;

@@ -1,5 +1,6 @@
 package com.practice.cakeshop.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "shop_order")
@@ -23,15 +27,16 @@ public class Order {
 	@Column(name = "order_id")
 	int orderId;
 	
-	@OneToMany
-	@JoinColumn(name = "cartItemId")
-	CartItem cartItem;
+	@OneToOne
+	@JoinColumn(name = "cartId")
+	Cart cart;
 	
 	String shippingAddress;
 	
-	LocalDateTime orderedDateTime;
+	LocalDate orderedDateTime;
 	
-	LocalDateTime shippingDateTime;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	LocalDate shippingDateTime;
 
 	double amount;
 	
@@ -47,12 +52,12 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	public CartItem getCartItem() {
-		return cartItem;
+	public Cart getCart() {
+		return cart;
 	}
 
-	public void setCartItem(CartItem cartItem) {
-		this.cartItem = cartItem;
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
 	public String getShippingAddress() {
@@ -63,19 +68,19 @@ public class Order {
 		this.shippingAddress = shippingAddress;
 	}
 
-	public LocalDateTime getOrderedDateTime() {
+	public LocalDate getOrderedDateTime() {
 		return orderedDateTime;
 	}
 
-	public void setOrderedDateTime(LocalDateTime orderedDateTime) {
+	public void setOrderedDateTime(LocalDate orderedDateTime) {
 		this.orderedDateTime = orderedDateTime;
 	}
 
-	public LocalDateTime getShippingDateTime() {
+	public LocalDate getShippingDateTime() {
 		return shippingDateTime;
 	}
 
-	public void setShippingDateTime(LocalDateTime shippingDateTime) {
+	public void setShippingDateTime(LocalDate shippingDateTime) {
 		this.shippingDateTime = shippingDateTime;
 	}
 
