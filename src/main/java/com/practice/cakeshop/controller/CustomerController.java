@@ -95,8 +95,8 @@ public class CustomerController {
 	}
 	
 	@GetMapping(value = "/viewOrders")
-	public List<Order> viewOrders(@RequestParam int orderId) {
-		return custService.viewOrders(orderId);
+	public List<Order> viewOrders(@RequestParam int customerId) {
+		return custService.viewOrders(customerId);
 	}
 	
 

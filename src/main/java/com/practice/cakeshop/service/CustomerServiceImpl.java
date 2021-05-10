@@ -80,9 +80,9 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public List<Order> viewOrders(int orderId) {
+	public List<Order> viewOrders(int customerId) {
 		// TODO Auto-generated method stub
-		return custRepo.viewOrders(orderId);
+		return custRepo.viewOrders(customerId);
 	}
 
 	

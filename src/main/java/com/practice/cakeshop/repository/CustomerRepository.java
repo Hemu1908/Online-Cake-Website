@@ -31,8 +31,9 @@ public interface CustomerRepository {
 	public Cart displayAllItemsOfCart(int customerId);
 	public Order placeOrder(OrderDto orderDto);
 	public CartItem findCartItemById(int cartItemId);
-	public List<Order> viewOrders(int orderId);
+	public List<Order> viewOrders(int customerId);
 	public Cart findCartById(int cartId);
 	public int deleteCart(int cartId);
 	public int deleteCartItem(int cartItemId);
+	public Order findOrdersByCustomerId(int customerId);
 }

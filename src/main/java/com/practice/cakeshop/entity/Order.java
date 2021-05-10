@@ -113,7 +113,7 @@ public class Order {
 	public void setTimeslot(String timeslot) {
 		this.timeslot = timeslot;
 	}
-	@JsonIgnore
+
 	public List<OrderItem> getOrderItem() {
 		return orderItem;
 	}

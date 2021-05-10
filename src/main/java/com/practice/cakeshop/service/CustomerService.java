@@ -27,6 +27,6 @@ public interface CustomerService {
 	public CartItem addToCart(CartItemDto cartDto);
 	public Cart displayItemsOfCart(int customerId);
 	public Order placeOrder(OrderDto orderDto);
-	public List<Order> viewOrders(int orderId);
+	public List<Order> viewOrders(int customerId);
 
 }

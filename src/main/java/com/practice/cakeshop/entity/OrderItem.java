@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "shop_order_item")
 public class OrderItem {
@@ -62,6 +64,7 @@ public class OrderItem {
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
 		return order;
 	}

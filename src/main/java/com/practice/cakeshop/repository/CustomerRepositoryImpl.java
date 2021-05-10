@@ -3,6 +3,7 @@ package com.practice.cakeshop.repository;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -255,10 +256,10 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 
 	@Override
-	public List<Order> viewOrders(int orderId) {
-		String jpql = "select o from Order o where o.orderId = :orderId";
+	public List<Order> viewOrders(int customerId) {
+		String jpql = "select o from Order o where o.customer.customerId = :customerId";
 		Query q = em.createQuery(jpql);
-		q.setParameter("orderId", orderId);
+		q.setParameter("customerId", customerId);
 		return q.getResultList();
 	}
 
@@ -290,6 +291,13 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 		query.setParameter("cId", cartId);
 		int rec = query.executeUpdate();
 		return rec;
+	}
+
+
+	@Override
+	public Order findOrdersByCustomerId(int customerId) {
+		// TODO Auto-generated method stub
+		return em.find(Order.class, customerId);
 	}
 	
 }
