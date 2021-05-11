@@ -210,7 +210,12 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 		String jpql = "select c from Cart c where c.customer.customerId = :custId";
 		Query q = em.createQuery(jpql);
 		q.setParameter("custId", customerId);
-		return (Cart) q.getSingleResult();
+		try {
+			return (Cart) q.getSingleResult();
+		} catch(NoResultException nre) {
+			return null;
+		}
+		
 	}
 
 
