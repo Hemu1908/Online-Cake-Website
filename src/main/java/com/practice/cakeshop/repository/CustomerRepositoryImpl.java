@@ -262,7 +262,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 	@Override
 	public List<Order> viewOrders(int customerId) {
-		String jpql = "select o from Order o where o.customer.customerId = :customerId";
+		String jpql = "select o from Order o where o.customer.customerId = :customerId order by o.orderId desc";
 		Query q = em.createQuery(jpql);
 		q.setParameter("customerId", customerId);
 		return q.getResultList();
@@ -303,6 +303,31 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 	public Order findOrdersByCustomerId(int customerId) {
 		// TODO Auto-generated method stub
 		return em.find(Order.class, customerId);
+	}
+
+
+	@Override
+	public List<Order> viewOrdersByStatus(OrderStatus status) {
+		String jpql = "select o from Order o where o.orderStatus=:oStatus";
+		Query query = em.createQuery(jpql);
+		query.setParameter("oStatus", status);
+		return query.getResultList();
+	}
+
+
+	@Override
+	public Order changeOrderStatus(int orderId, OrderStatus status) {
+		// TODO Auto-generated method stub
+		Order order = findOrderById(orderId);
+		order.setOrderStatus(status);
+		return em.merge(order);
+	}
+
+
+	@Override
+	public Order findOrderById(int orderId) {
+		// TODO Auto-generated method stub
+		return em.find(Order.class, orderId);
 	}
 	
 }

@@ -18,6 +18,7 @@ import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Order;
+import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
 import com.practice.cakeshop.repository.CustomerRepository;
 
@@ -83,6 +84,18 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<Order> viewOrders(int customerId) {
 		// TODO Auto-generated method stub
 		return custRepo.viewOrders(customerId);
+	}
+
+	@Override
+	public List<Order> viewOrdersByStatus(OrderStatus status) {
+		// TODO Auto-generated method stub
+		return custRepo.viewOrdersByStatus(status);
+	}
+
+	@Override
+	public Order changeOrderStatus(int orderId, OrderStatus status) {
+		// TODO Auto-generated method stub
+		return custRepo.changeOrderStatus(orderId, status);
 	}
 
 	

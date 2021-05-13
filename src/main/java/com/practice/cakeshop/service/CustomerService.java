@@ -14,6 +14,7 @@ import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Order;
+import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
 
 public interface CustomerService {
@@ -28,5 +29,7 @@ public interface CustomerService {
 	public Cart displayItemsOfCart(int customerId);
 	public Order placeOrder(OrderDto orderDto);
 	public List<Order> viewOrders(int customerId);
+	public List<Order> viewOrdersByStatus(OrderStatus status);
+	public Order changeOrderStatus(int orderId, OrderStatus status);
 
 }

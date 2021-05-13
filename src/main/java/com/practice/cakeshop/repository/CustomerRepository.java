@@ -12,6 +12,7 @@ import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Order;
+import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
 
 public interface CustomerRepository {
@@ -36,4 +37,7 @@ public interface CustomerRepository {
 	public int deleteCart(int cartId);
 	public int deleteCartItem(int cartItemId);
 	public Order findOrdersByCustomerId(int customerId);
+	public Order findOrderById(int orderId);
+	public List<Order> viewOrdersByStatus(OrderStatus status);
+	public Order changeOrderStatus(int orderId, OrderStatus status);
 }

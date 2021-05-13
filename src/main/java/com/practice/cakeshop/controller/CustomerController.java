@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
 import com.practice.cakeshop.entity.Order;
+import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
 import com.practice.cakeshop.service.CustomerService;
 
@@ -97,6 +99,16 @@ public class CustomerController {
 	@GetMapping(value = "/viewOrders")
 	public List<Order> viewOrders(@RequestParam int customerId) {
 		return custService.viewOrders(customerId);
+	}
+	
+	@GetMapping(value = "/viewOrdersByStatus")
+	public List<Order> viewOrderByStatus(@RequestParam OrderStatus status) {
+		return custService.viewOrdersByStatus(status);
+	}
+	
+	@PutMapping(value = "changeOrderStatus")
+	public Order changeOrderStatus(@RequestParam int orderId, @RequestParam OrderStatus status) {
+		return custService.changeOrderStatus(orderId, status);
 	}
 	
 
