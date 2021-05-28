@@ -26,6 +26,7 @@ import com.practice.cakeshop.entity.Cart;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
+import com.practice.cakeshop.entity.Expense;
 import com.practice.cakeshop.entity.Order;
 import com.practice.cakeshop.entity.OrderItem;
 import com.practice.cakeshop.entity.OrderStatus;
@@ -328,6 +329,24 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 	public Order findOrderById(int orderId) {
 		// TODO Auto-generated method stub
 		return em.find(Order.class, orderId);
+	}
+
+
+	@Override
+	@Transactional
+	public Expense addExpense(Expense expense) {
+		// TODO Auto-generated method stub
+		return em.merge(expense);
+	}
+
+
+	@Override
+	public List<Expense> viewAllExpense() {
+		// TODO Auto-generated method stub
+		String jpql = "select e from Expense e order by e.orderDate desc";
+		Query query = em.createQuery(jpql);
+		
+		return query.getResultList();
 	}
 	
 }

@@ -17,12 +17,14 @@ import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginDto;
 import com.practice.cakeshop.dto.LoginStatus;
+import com.practice.cakeshop.dto.NotificationRequestDto;
 import com.practice.cakeshop.dto.OrderDto;
 import com.practice.cakeshop.dto.ProductDto;
 import com.practice.cakeshop.entity.Cart;
 import com.practice.cakeshop.entity.CartItem;
 import com.practice.cakeshop.entity.Category;
 import com.practice.cakeshop.entity.Customer;
+import com.practice.cakeshop.entity.Expense;
 import com.practice.cakeshop.entity.Order;
 import com.practice.cakeshop.entity.OrderStatus;
 import com.practice.cakeshop.entity.Product;
@@ -111,6 +113,20 @@ public class CustomerController {
 		return custService.changeOrderStatus(orderId, status);
 	}
 	
+	@PostMapping(value="addExpense")
+	public Expense addExpense(@RequestBody Expense expense) {
+		return custService.addExpense(expense);
+	}
+	
+	@GetMapping(value = "viewAllExpense")
+	public List<Expense> viewAllExpense() {
+		return custService.viewAllExpense();
+	}
+	
+	@PostMapping(value = "token")
+    public String sendPnsToDevice(@RequestBody NotificationRequestDto notificationRequestDto) {
+        return custService.sendPnsToDevice(notificationRequestDto);
+    }
 
 }
 
