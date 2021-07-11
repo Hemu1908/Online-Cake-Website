@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.mail.Multipart;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,8 +76,8 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Product addProduct(ProductDto product) {
-		return custRepo.addProduct(product);
+	public Product addProduct(ProductDto product, HttpServletRequest request) {
+		return custRepo.addProduct(product,request);
 		
 	}
 

@@ -1,5 +1,6 @@
 package com.practice.cakeshop.repository;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -80,11 +82,19 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
 
 	@Override
-	public Product addProduct(@ModelAttribute ProductDto productDto) {
+	public Product addProduct(@ModelAttribute ProductDto productDto,HttpServletRequest request) {
 		Product product = new Product();
 //		String imageUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
-        String imageUploadLocation = "c:/uploads/";
-        String fileName = productDto.getImage().getOriginalFilename();
+		String projectPath = request.getServletContext().getRealPath("/");
+		System.out.println(projectPath);
+		
+        String imageUploadLocation = projectPath+"/uploads/";
+        File f = new File(imageUploadLocation);
+        
+        if(!f.exists())
+        	f.mkdir();
+        
+       String fileName = productDto.getImage().getOriginalFilename();
        String targetFile = imageUploadLocation + fileName;
        try {
            FileCopyUtils.copy(productDto.getImage().getInputStream(), new FileOutputStream(targetFile));
@@ -95,7 +105,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 		product.setName(productDto.getName());
 		product.setDescription(productDto.getDescription());
 		product.setUnitPrice(Double.parseDouble(productDto.getUnitPrice()));
-		product.setImage(fileName);
+		product.setImage(targetFile);
 		product.setCategory(findCategoryByName(productDto.getCategoryName()));
 		return em.merge(product);
 	}

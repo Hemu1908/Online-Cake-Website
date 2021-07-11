@@ -3,6 +3,7 @@ package com.practice.cakeshop.service;
 import java.util.List;
 
 import javax.mail.Multipart;
+import javax.servlet.http.HttpServletRequest;
 
 import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
@@ -23,7 +24,7 @@ public interface CustomerService {
 	
 	public Customer register(Customer customer);
 	public LoginStatus login(String emailId, String password);
-	public Product addProduct(ProductDto product);
+	public Product addProduct(ProductDto product, HttpServletRequest request);
 	public Category addCategory(CategoryDto category);
 	public List<String> fetchCategoryNames();
 	public List<Category> fetchProductsByCategoryName(String categoryName);

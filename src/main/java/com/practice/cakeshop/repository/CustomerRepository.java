@@ -2,6 +2,8 @@ package com.practice.cakeshop.repository;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.practice.cakeshop.dto.CartItemDto;
 import com.practice.cakeshop.dto.CategoryDto;
 import com.practice.cakeshop.dto.LoginStatus;
@@ -22,7 +24,7 @@ public interface CustomerRepository {
 	public LoginStatus login(String email, String password);
 	public Customer findCustomerById(int customerId);
 	public boolean isProductPresent(String name);
-	public Product addProduct(ProductDto productDto);
+	public Product addProduct(ProductDto productDto, HttpServletRequest request);
 	public boolean isCategoryPresent(String name);
 	public Category addCategory(CategoryDto categoryDto);
 	public Category findCategoryByName(String name);

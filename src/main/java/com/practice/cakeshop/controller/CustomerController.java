@@ -2,6 +2,8 @@ package com.practice.cakeshop.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +50,9 @@ public class CustomerController {
 	 }
 	
 	@PostMapping(value = "/addProduct")
-	public Product addProduct(@ModelAttribute ProductDto product) {
+	public Product addProduct(@ModelAttribute ProductDto product, HttpServletRequest request) {
 		try {
-			return custService.addProduct(product);
+			return custService.addProduct(product, request);
 		}catch(Exception e) {
 			return null;
 		}
